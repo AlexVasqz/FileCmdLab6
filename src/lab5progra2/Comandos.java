@@ -141,7 +141,7 @@ public class Comandos {
             consola.append("Archivo no encontrado.\n");
         }
     }
-    
+
     public void mostrarAyuda() {
         consola.append("Lista de comandos del CMD:\n");
         consola.append("----------------------------------\n");
@@ -156,8 +156,8 @@ public class Comandos {
         consola.append("wr <archivo> <texto>   : Escribe texto en el archivo.\n");
         consola.append("rd <archivo>           : Lee el contenido del archivo.\n");
         consola.append("help                   : Muestra esta lista de comandos.\n");
+        consola.append("exit                   : Cierra el programa.\n");
         consola.append("\n");
     }
-    
-}
 
+}
