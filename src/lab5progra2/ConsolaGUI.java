@@ -206,9 +206,6 @@ public class ConsolaGUI extends JFrame {
                     textArea.append("Uso: rd <archivo.ext>\n");
                 }
                 break;
-            case "cls":
-                textArea.setText("");
-                break;
             case "help":
                 comandos.mostrarAyuda();
                 break;
