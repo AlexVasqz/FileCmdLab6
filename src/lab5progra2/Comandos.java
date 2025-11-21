@@ -150,7 +150,7 @@ public class Comandos {
         consola.append("rm <nombre>            : Elimina un archivo o carpeta.\n");
         consola.append("dir                    : Lista contenido del directorio actual.\n");
         consola.append("cd <carpeta>           : Cambia a la carpeta especificada.\n");
-        consola.append("cd ...                 : Va al directorio padre.\n");
+        consola.append("...                    : Va al directorio padre.\n");
         consola.append("date                   : Muestra la fecha actual.\n");
         consola.append("time                   : Muestra la hora actual.\n");
         consola.append("wr <archivo> <texto>   : Escribe texto en el archivo.\n");
