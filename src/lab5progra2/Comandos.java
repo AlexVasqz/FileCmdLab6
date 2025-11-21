@@ -141,7 +141,7 @@ public class Comandos {
             consola.append("Archivo no encontrado.\n");
         }
     }
-    
+
     public void mostrarAyuda() {
         consola.append("Lista de comandos del CMD:\n");
         consola.append("----------------------------------\n");
@@ -159,6 +159,5 @@ public class Comandos {
         consola.append("exit                   : Cierra el programa.\n");
         consola.append("\n");
     }
-    
-}
 
+}
