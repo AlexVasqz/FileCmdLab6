@@ -24,7 +24,7 @@ public class Lab5Progra2 {
         } catch (Exception ex) {
             ex.getMessage();
         }
-        
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -32,5 +32,5 @@ public class Lab5Progra2 {
             }
         });
     }
-    
+
 }
