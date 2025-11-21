@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package lab5progra2;
 
 import java.awt.Color;
@@ -10,6 +14,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+/**
+ *
+ * @author ljmc2
+ */
 public class ConsolaGUI extends JFrame {
     
     private JTextArea textArea;
@@ -20,7 +28,7 @@ public class ConsolaGUI extends JFrame {
     private File directorioActual;
     
     public ConsolaGUI() {
-        directorioActual = new File(System.getProperty("user.home"));
+        directorioActual = new File(System.getProperty("user.dir"));
         initComponents();
         comandos = new Comandos(textArea);
         mostrarPrompt();
@@ -32,7 +40,7 @@ public class ConsolaGUI extends JFrame {
         scrollPane = new JScrollPane();
         
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Administrator: Command Prompt");
+        setTitle("Símbolo del sistema");
         setSize(900, 500);
         setLocationRelativeTo(null);
         
@@ -40,13 +48,16 @@ public class ConsolaGUI extends JFrame {
         textArea.setForeground(new Color(204, 204, 204));
         textArea.setFont(new Font("Consolas", Font.PLAIN, 14));
         textArea.setCaretColor(Color.WHITE);
-        textArea.setText("Microsoft Windows [Version 10.0.22621.521]\n(c) Microsoft Corporation. All rights reserved.\n\n");
+        textArea.setText("Microsoft Windows [Versión 10.0.26100.7171]\n(c) Microsoft Corporation. Todos los derechos reservados.\n"
+                + "Para ver la lista de comandos, ingrese help.\n\n");
         
         textArea.addKeyListener(new KeyAdapter() {
+            @Override
             public void keyPressed(KeyEvent evt) {
                 textAreaKeyPressed(evt);
             }
             
+            @Override
             public void keyTyped(KeyEvent evt) {
                 textAreaKeyTyped(evt);
             }
@@ -65,21 +76,39 @@ public class ConsolaGUI extends JFrame {
         textArea.setCaretPosition(textArea.getText().length());
     }
     
+    //evita que se borre el texto del programa
     private void textAreaKeyPressed(KeyEvent evt) {
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            evt.consume();
-            procesarComando();
-        } else if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-            if (textArea.getCaretPosition() <= posicionPrompt) {
+        int caret = textArea.getCaretPosition();
+
+        switch (evt.getKeyCode()) {
+            case KeyEvent.VK_ENTER:
                 evt.consume();
-            }
-        } else if (evt.getKeyCode() == KeyEvent.VK_LEFT || 
-                   evt.getKeyCode() == KeyEvent.VK_HOME) {
-            if (textArea.getCaretPosition() <= posicionPrompt) {
-                evt.consume();
-            }
+                procesarComando();
+                break;
+
+            case KeyEvent.VK_BACK_SPACE:
+            case KeyEvent.VK_LEFT:
+            case KeyEvent.VK_HOME:
+                if (caret <= posicionPrompt) {
+                    evt.consume();
+                }
+                break;
+                //bloquear suprimir
+            case KeyEvent.VK_DELETE:
+                if (caret < posicionPrompt) {
+                    evt.consume();
+                }
+                break;
+
+            default:
+                //bloquear ctrl x
+                if (evt.isControlDown() && evt.getKeyCode() == KeyEvent.VK_X) {
+                    evt.consume();
+                }
+                break;
         }
     }
+
     
     private void textAreaKeyTyped(KeyEvent evt) {
         if (textArea.getCaretPosition() < posicionPrompt) {
@@ -120,7 +149,8 @@ public class ConsolaGUI extends JFrame {
                 if (!argumento.isEmpty()) {
                     comandos.eliminar(directorioActual, argumento);
                 } else {
-                    textArea.append("Uso: rm <nombre>\n");
+                    textArea.append("Uso: rm <nombre>\n"
+                            + "Realizar desde padre.\n");
                 }
                 break;
             case "cd":
@@ -186,30 +216,14 @@ public class ConsolaGUI extends JFrame {
                 System.exit(0);
                 break;
             default:
-                textArea.append("'" + comandoActual + "' is not recognized as an internal or external command,\noperable program or batch file.\n");
+                textArea.append("'" + comandoActual + "' no se reconoce como un comando interno o externo,"
+                        + "\nprograma o archivo por lotes ejecutable.\n");
                 break;
         }
         
         mostrarPrompt();
     }
     
-    public static void main(String args[]) {
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Windows".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ConsolaGUI().setVisible(true);
-            }
-        });
-    }
+    
 }
 
